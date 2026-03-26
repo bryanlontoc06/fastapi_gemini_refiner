@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 # --- Pydantic Models ---
 class RefineRequest(BaseModel):
-    input_text: str
+    message: str
 
 class RefineResponse(BaseModel):
-    refined_text: str
+    refined_message: str
