@@ -1,10 +1,13 @@
 import os
 from http import HTTPStatus
+from typing import Annotated
 
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.responses import JSONResponse
 
+from src.auth.dependencies import get_user_identifier
+from src.auth.throttling import apply_rate_limit
 from src.models import RefineRequest, RefineResponse
 
 from .ai.gemini import Gemini
@@ -36,7 +39,8 @@ def root():
     return {"message": "Welcome to the AI Refiner!"}
 
 @app.post("/refine", response_model=RefineResponse, tags=["Refine"], operation_id="refine")
-def refine(refine_request: RefineRequest):
+def refine(refine_request: RefineRequest, user_id: Annotated[str, Depends(get_user_identifier)]):
+    apply_rate_limit(user_id)
     if len(refine_request.message) > 150:
         return JSONResponse(
             status_code=HTTPStatus.BAD_REQUEST,

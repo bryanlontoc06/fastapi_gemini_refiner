@@ -12,7 +12,7 @@ class Gemini(AIPlatform):
         genai.configure(api_key=self.api_key) # type: ignore
 
         # See more models here: https://ai.google.dev/gemini-api/docs/models
-        self.model = genai.GenerativeModel(model_name="gemini-3-flash-preview", # type: ignore
+        self.model = genai.GenerativeModel(model_name="gemini-3.1-flash-lite-preview", # type: ignore
                                            system_instruction=self.system_prompt)
 
     def refine(self, message: str) -> str:
