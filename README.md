@@ -3,7 +3,7 @@
 A high-performance API built with **FastAPI** and **Google Gemini AI** designed to refine, polish, and optimize text input. It features a custom-built **Sliding Window Rate Limiter** to manage API traffic and protect against resource exhaustion.
 
 ## ✨ Key Features
-* **AI-Powered Refinement:** Leverages `gemini-1.5-flash` for intelligent text enhancement and grammar correction.
+* **AI-Powered Refinement:** Leverages `gemini-3.1-flash-lite-preview` for intelligent text enhancement and grammar correction.
 * **Custom Rate Limiting:** Implements a sliding window algorithm to differentiate between authenticated and guest users.
 * **Robust Error Handling:** Gracefully manages Google API Quota limits (`429 ResourceExhausted`) and validation errors.
 * **Pydantic Data Validation:** Ensures strict data integrity for all incoming requests and outgoing responses.
@@ -20,7 +20,7 @@ A high-performance API built with **FastAPI** and **Google Gemini AI** designed 
 
 1\. **Clone the repository:**
    ```bash
-   git clone [https://github.com/bryanlontoc06/fastapi_gemini_refiner.git](https://github.com/bryanlontoc06/fastapi_gemini_refiner.git)
+   git clone https://github.com/bryanlontoc06/fastapi_gemini_refiner.git
    cd fastapi-gemini-refiner
    ```
 
@@ -60,3 +60,5 @@ Once running, access the interactive documentation at:
 - Swagger UI: http://127.0.0.1:8000/docs
 - ReDoc: http://127.0.0.1:8000/redoc
 ```
+
+### LIVE: https://fastapi-gemini-refiner.onrender.com/docs
