@@ -9,12 +9,14 @@ class Gemini(AIPlatform):
     def __init__(self, api_key: str, system_prompt: Optional[str] = None):
         self.api_key = api_key
         self.system_prompt = system_prompt
-        genai.configure(api_key=self.api_key) # type: ignore
+        genai.configure(api_key=self.api_key)  # type: ignore
 
         # See more models here: https://ai.google.dev/gemini-api/docs/models
-        self.model = genai.GenerativeModel(model_name="gemini-3.1-flash-lite-preview", # type: ignore
-                                           system_instruction=self.system_prompt)
+        self.model = genai.GenerativeModel(  # type: ignore
+            model_name="gemini-3.1-flash-lite-preview",
+            system_instruction=self.system_prompt,
+        )
 
     def refine(self, message: str) -> str:
-        response = self.model.generate_content(message); # type: ignore
+        response = self.model.generate_content(message)  # type: ignore
         return response.text

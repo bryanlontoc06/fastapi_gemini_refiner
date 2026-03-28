@@ -25,6 +25,7 @@ def load_system_prompt():
     except FileNotFoundError:
         return None
 
+
 system_prompt = load_system_prompt()
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
@@ -33,13 +34,19 @@ if not gemini_api_key:
 
 ai_platform = Gemini(api_key=gemini_api_key, system_prompt=system_prompt)
 
+
 # --- Endpoints ---
 @app.get("/")
 def root():
     return {"message": "Welcome to the AI Refiner!"}
 
-@app.post("/refine", response_model=RefineResponse, tags=["Refine"], operation_id="refine")
-def refine(refine_request: RefineRequest, user_id: Annotated[str, Depends(get_user_identifier)]):
+
+@app.post(
+    "/refine", response_model=RefineResponse, tags=["Refine"], operation_id="refine"
+)
+def refine(
+    refine_request: RefineRequest, user_id: Annotated[str, Depends(get_user_identifier)]
+):
     apply_rate_limit(user_id)
     if len(refine_request.message) > 150:
         return JSONResponse(
@@ -47,9 +54,9 @@ def refine(refine_request: RefineRequest, user_id: Annotated[str, Depends(get_us
             content={
                 "error": {
                     "code": HTTPStatus.BAD_REQUEST,
-                    "message": f"Message exceeds 150 characters limit. Total characters: {len(refine_request.message)}"
+                    "message": f"Message exceeds 150 characters limit. Total characters: {len(refine_request.message)}",
                 }
-            }
+            },
         )
     refined_message = ai_platform.refine(refine_request.message)
     return RefineResponse(response=refined_message)

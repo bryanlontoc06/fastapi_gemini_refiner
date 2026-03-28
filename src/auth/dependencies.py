@@ -18,11 +18,14 @@ ALGORITHM: str = _ALGORITHM
 
 security = HTTPBearer(auto_error=False)
 
-def get_user_identifier(res: Annotated[HTTPAuthorizationCredentials | None, Depends(security)]) -> str:
+
+def get_user_identifier(
+    res: Annotated[HTTPAuthorizationCredentials | None, Depends(security)],
+) -> str:
     if res is None:
         print("No token provided, returning global_unauthenticated_user")
         return "global_unauthenticated_user"
-    token:str = res.credentials
+    token: str = res.credentials
 
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
